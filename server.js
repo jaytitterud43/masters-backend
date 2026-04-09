@@ -11,9 +11,17 @@ let cache = { data: null, lastUpdated: null };
 
 async function fetchScores() {
   try {
-    const res = await fetch(MASTERS_URL);
+    console.log("Fetching scores from Masters...");
+    const res = await fetch(MASTERS_URL, {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "application/json, text/plain, */*",
+        "Referer": "https://www.masters.com/"
+      }
+    });
+    console.log("Response status:", res.status);
     const text = await res.text();
-    // Masters feed has a JS-style prefix, strip it if present
+    console.log("Response preview:", text.substring(0, 200));
     const clean = text.replace(/^[^{]*/, "");
     const json = JSON.parse(clean);
     const players = json.data.player.map(p => {
@@ -39,6 +47,7 @@ async function fetchScores() {
     console.log(`Scores updated: ${cache.lastUpdated} — ${players.length} players`);
   } catch (err) {
     console.error("Error fetching scores:", err.message);
+    console.error(err.stack);
   }
 }
 
