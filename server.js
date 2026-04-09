@@ -5,7 +5,7 @@ const fetch = require("node-fetch");
 const app = express();
 app.use(cors());
 
-const ESPN_URL = "https://site.web.api.espn.com/apis/site/v2/sports/golf/pga/leaderboard?event=401703513";
+const ESPN_URL = "https://site.web.api.espn.com/apis/site/v2/sports/golf/pga/leaderboard?event=401811941";
 let cache = { data: null, lastUpdated: null };
 
 async function fetchScores() {
